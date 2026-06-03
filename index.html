@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Color Palette Generator</title><style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh}
+header{text-align:center;padding:32px 20px 16px}h1{font-size:28px;margin-bottom:8px}p{color:#94a3b8;font-size:14px}
+.controls{text-align:center;padding:0 20px 24px}.gen-btn{background:#8b5cf6;color:#fff;border:none;border-radius:10px;padding:14px 32px;font-size:16px;font-weight:700;cursor:pointer}.gen-btn:hover{background:#a78bfa}.gen-btn:active{transform:scale(0.96)}
+.palette{display:flex;min-height:70vh}.color-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:transform .15s;position:relative}
+.color-col:hover{transform:scale(1.02);z-index:1}.color-col .hex{font-size:18px;font-weight:700;margin-bottom:8px;opacity:0.9;text-shadow:0 1px 4px rgba(0,0,0,0.5)}
+.color-col .rgb{font-size:13px;opacity:0.7;text-shadow:0 1px 4px rgba(0,0,0,0.5)}.color-col .copied{position:absolute;bottom:30%;font-size:16px;font-weight:700;background:rgba(0,0,0,0.6);padding:8px 20px;border-radius:8px;opacity:0;transition:opacity .3s}
+.color-col .copied.show{opacity:1}footer{text-align:center;padding:20px;color:#94a3b8;font-size:13px}
+@media(max-width:600px){.palette{flex-direction:column;min-height:auto}.color-col{min-height:120px}}
+</style></head><body><header><h1>Color Palette Generator</h1><p>Click any color to copy hex, press Space to generate</p></header>
+<div class="controls"><button class="gen-btn" onclick="generate()">Generate Palette</button></div>
+<div class="palette" id="palette"></div><footer>Press Space to generate, click to copy</footer>
+<script>
+function randHSL(){const h=Math.floor(Math.random()*360),s=50+Math.floor(Math.random()*40),l=40+Math.floor(Math.random()*30);return{h,s,l}}
+function hsl2hex(h,s,l){s/=100;l/=100;const a=s*Math.min(l,1-l);const f=n=>{const k=(n+h/30)%12;return l-a*Math.max(Math.min(k-3,9-k,1),-1)};const toHex=x=>Math.round(x*255).toString(16).padStart(2,"0");return"#"+toHex(f(0))+toHex(f(8))+toHex(f(4))}
+function generate(){const pal=document.getElementById("palette");pal.innerHTML="";for(let i=0;i<5;i++){const{h,s,l}=randHSL();const hex=hsl2hex(h,s,l);const col=document.createElement("div");col.className="color-col";col.style.background=hex;const isLight=l>55;col.style.color=isLight?"#000":"#fff";col.innerHTML='<span class="hex">'+hex.toUpperCase()+'</span><span class="rgb">'+h+", "+s+"%, "+l+'%</span><span class="copied">Copied!</span>';col.onclick=()=>{navigator.clipboard.writeText(hex.toUpperCase());const cop=col.querySelector(".copied");cop.classList.add("show");setTimeout(()=>cop.classList.remove("show"),1000)};pal.appendChild(col)}}
+document.addEventListener("keydown",e=>{if(e.code==="Space"){e.preventDefault();generate()}});
+generate()
+</script></body></html>
