@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Color Palette Generator</h1>
+        <div class="controls">
+            <select id="modeSelect">
+                <option value="random">Random</option>
+                <option value="analogous">Analogous</option>
+                <option value="complementary">Complementary</option>
+                <option value="triadic">Triadic</option>
+                <option value="monochrome">Monochrome</option>
+                <option value="pastel">Pastel</option>
+                <option value="dark">Dark Theme</option>
+            </select>
+            <button class="btn" id="generateBtn">Generate (Space)</button>
+        </div>
+        <div class="palette" id="palette"></div>
+        <div class="saved">
+            <h3>Saved Palettes <button class="btn-small" id="clearSaved">Clear All</button></h3>
+            <div id="savedList"></div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
